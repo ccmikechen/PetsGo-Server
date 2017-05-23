@@ -31,3 +31,6 @@ config :petsgo, Petsgo.Repo,
   pool_size: 10
 
 import_config "dev.secret.exs"
+
+config :guardian, Guardian,
+  secret_key: "3m80shgHhK07YKfFnRt6E3g3dh1pHNJyyUWq1THWkexveGtV7PasIRLT97s7QI32"
