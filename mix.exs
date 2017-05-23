@@ -36,7 +36,8 @@ defmodule Petsgo.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 3.0.2"},
-     {:guardian, "~> 0.14.2"}]
+     {:guardian, "~> 0.14.2"},
+     {:cors_plug, "~> 1.2.1"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

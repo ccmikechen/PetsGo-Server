@@ -37,4 +37,5 @@ defmodule Petsgo.Endpoint do
     signing_salt: "Ea4gf05o"
 
   plug Petsgo.Router
+  plug CORSPlug
 end

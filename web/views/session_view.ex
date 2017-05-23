@@ -1,9 +1,9 @@
-defmodule Sling.SessionView do
+defmodule Petsgo.SessionView do
   use Petsgo.Web, :view
 
   def render("show.json", %{user: user, jwt: jwt}) do
     %{
-      data: render_one(user, Sling.UserView, "user.json"),
+      data: render_one(user, Petsgo.UserView, "user.json"),
       meta: %{token: jwt}
     }
   end

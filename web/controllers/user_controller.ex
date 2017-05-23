@@ -4,7 +4,9 @@ defmodule Petsgo.UserController do
   alias Petsgo.User
 
   def create(conn, params) do
-    changeset = User.changeset(%User{}, params)
+    changeset = User.registration_changeset(%User{}, params)
+
+    IO.inspect(changeset)
 
     case Repo.insert(changeset) do
       {:ok, user} ->

@@ -51,7 +51,7 @@ defmodule Petsgo.SessionController do
 
   defp authenticate(%{"username" => username, "password" => password}) do
     user = Repo.get_by(Petsgo.User, username: username)
-    
+
     case check_password(user, password) do
       true -> {:ok, user}
       _ -> :error
