@@ -18,5 +18,6 @@ defmodule Petsgo.Repo.Migrations.CreateUser do
 
     create unique_index(:users, [:username])
     create unique_index(:users, [:email])
+    
   end
 end
