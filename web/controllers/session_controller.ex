@@ -29,13 +29,10 @@ defmodule Petsgo.SessionController do
   def refresh(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
     jwt = Guardian.Plug.current_token(conn)
-    {:ok, claims} = Guardian.Plug.claims(conn)
 
-    case Guardian.refresh!(jwt, claims, %{ttl: {30, :days}}) do
-      {:ok, new_jwt, _new_claims} ->
-        conn
-        |> put_status(:ok)
-        |> render("show.json", user: user, jwt: new_jwt)
+    case Guardian.Plug.claims(conn) do
+      {:ok, claims} ->
+        do_refresh(conn, user, jwt, claims)
       {:error, _reason} ->
         conn
         |> put_status(:unauthorized)
@@ -62,6 +59,19 @@ defmodule Petsgo.SessionController do
     case user do
       nil -> Comeonin.Bcrypt.dummy_checkpw()
       _ -> Comeonin.Bcrypt.checkpw(password, user.password_hash)
+    end
+  end
+
+  defp do_refresh(conn, user, jwt, claims) do
+    case Guardian.refresh!(jwt, claims, %{ttl: {30, :days}}) do
+      {:ok, new_jwt, _new_claims} ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", user: user, jwt: new_jwt)
+      {:error, _reason} ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("forbidden.json", error: "Not authenticated")
     end
   end
 end
