@@ -2,8 +2,6 @@ defmodule Petsgo.PostView do
   use Petsgo.Web, :view
 
   alias Petsgo.Repo
-  alias Petsgo.PostType
-  alias Petsgo.User
 
   def render("index.json", %{posts: posts}) do
     %{data: render_many(posts, Petsgo.PostView, "post.json")}
@@ -14,12 +12,14 @@ defmodule Petsgo.PostView do
   end
 
   def render("post.json", %{post: post}) do
-    %{type_name: type} = Repo.get(PostType, post.type_id)
-    user = Repo.get(User, post.user_id)
+    %{type: type, user: user} =
+      post
+      |> Repo.preload(:type)
+      |> Repo.preload(:user)
 
     %{
       id: post.id,
-      type: type,
+      type: type.type_name,
       user: %{
         username: user.username,
         image: user.image,
@@ -30,6 +30,15 @@ defmodule Petsgo.PostView do
       content: post.content,
       inserted_at: post.inserted_at,
       updated_at: post.updated_at
+    }
+  end
+
+  def render("new.json", %{post_id: post_id}) do
+    %{
+      result: %{
+        status: "ok",
+        post_id: post_id
+      }
     }
   end
 end

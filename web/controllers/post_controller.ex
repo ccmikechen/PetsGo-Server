@@ -10,9 +10,21 @@ defmodule Petsgo.PostController do
     render(conn, "index.json", posts: posts)
   end
 
-  def create(conn, %{"post" => post_params}) do
+  def create(conn, %{"title" => title, "content" => content, "type" => type}) do
+    type_query =
+      from u in "post_types",
+      where: u.type_name == ^type,
+      select: u.id
+    [type_id] = Repo.all(type_query)
     current_user = Guardian.Plug.current_resource(conn)
-    changeset = Post.changeset(%Post{}, %{post_params | user_id: current_user.id})
+
+    post = %{
+      title: title,
+      content: content,
+      user_id: current_user.id,
+      type_id: type_id
+    }
+    changeset = Post.changeset(%Post{}, post)
 
     case Repo.insert(changeset) do
       {:ok, post} ->

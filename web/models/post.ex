@@ -4,7 +4,7 @@ defmodule Petsgo.Post do
   schema "posts" do
     field :title, :string
     field :content, :string
-    belongs_to :type, Petsgo.Type
+    belongs_to :type, Petsgo.PostType
     belongs_to :user, Petsgo.User
 
     timestamps()
@@ -15,7 +15,7 @@ defmodule Petsgo.Post do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :content])
-    |> validate_required([:title, :content])
+    |> cast(params, [:title, :content, :user_id, :type_id])
+    |> validate_required([:title, :content, :user_id, :type_id])
   end
 end
