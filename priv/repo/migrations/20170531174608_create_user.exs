@@ -8,7 +8,7 @@ defmodule Petsgo.Repo.Migrations.CreateUser do
       add :password_hash, :string, null: false
       add :first_name, :string, null: false
       add :last_name, :string, null: false
-      add :sex, :string, null: false
+      add :sex, :string
       add :birthday, :date
       add :phone_number, :string
       add :image, :string

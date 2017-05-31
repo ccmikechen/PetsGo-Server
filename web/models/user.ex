@@ -22,7 +22,7 @@ defmodule Petsgo.User do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:username, :email, :first_name, :last_name, :sex, :birthday, :email, :phone_number, :image])
-    |> validate_required([:username, :email, :first_name, :last_name, :sex])
+    |> validate_required([:username, :email, :first_name, :last_name])
     |> unique_constraint(:username)
     |> unique_constraint(:email)
   end
