@@ -13,6 +13,7 @@ defmodule Petsgo.Router do
     post "/sessions", SessionController, :create
     delete "/sessions", SessionController, :delete
     post "/sessions/refresh", SessionController, :refresh
+    get "/sessions/user", SessionController, :show_user
 
     resources "/users", UserController, only: [:create]
 

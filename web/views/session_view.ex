@@ -8,6 +8,10 @@ defmodule Petsgo.SessionView do
     }
   end
 
+  def render("show_user.json", %{user: user}) do
+    %{data: render_one(user, Petsgo.UserView, "user.json")}
+  end
+
   def render("error.json", _) do
     %{error: "Invalid username or password"}
   end

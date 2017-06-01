@@ -40,6 +40,19 @@ defmodule Petsgo.SessionController do
     end
   end
 
+  def show_user(conn, _params) do
+    case Guardian.Plug.claims(conn) do
+      {:ok, _} ->
+        user = Guardian.Plug.current_resource(conn)
+        conn
+        |> render("show_user.json", user: user)
+      {:error, _reason} ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("forbidden.json", error: "Not authenticated")
+    end
+  end
+
   def unauthenticated(conn, _params) do
     conn
     |> put_status(:forbidden)

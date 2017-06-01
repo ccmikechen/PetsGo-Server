@@ -1,6 +1,8 @@
 defmodule Petsgo.User do
   use Petsgo.Web, :model
 
+  @email_regex ~r/(\w+)@([\w.]+)/
+
   schema "users" do
     field :username, :string
     field :email, :string
@@ -25,6 +27,8 @@ defmodule Petsgo.User do
     |> validate_required([:username, :email, :first_name, :last_name])
     |> unique_constraint(:username)
     |> unique_constraint(:email)
+    |> validate_length(:username, min: 8, max: 20)
+    |> validate_format(:email, @email_regex)
   end
 
   def registration_changeset(struct, params) do
