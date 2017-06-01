@@ -7,6 +7,10 @@ defmodule Petsgo.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  scope "/.well-known", Petsgo do
+    get "/acme-challenge/:challenge", AcmeChallengeController, :show
+  end
+
   scope "/api", Petsgo do
     pipe_through :api
 
