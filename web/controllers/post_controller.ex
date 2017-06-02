@@ -6,7 +6,12 @@ defmodule Petsgo.PostController do
   plug Guardian.Plug.EnsureAuthenticated, handler: Petsgo.SessionController
 
   def index(conn, _params) do
-    posts = Repo.all(Post)
+    query =
+      from p in Post,
+      select: p,
+      order_by: [desc: p.updated_at]
+
+    posts = Repo.all(query)
     render(conn, "index.json", posts: posts)
   end
 
