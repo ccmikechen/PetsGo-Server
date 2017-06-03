@@ -10,7 +10,6 @@ defmodule Petsgo.PostController do
       from p in Post,
       select: p,
       order_by: [desc: p.updated_at]
-
     posts = Repo.all(query)
     render(conn, "index.json", posts: posts)
   end
@@ -45,6 +44,7 @@ defmodule Petsgo.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
+    IO.inspect post
     render(conn, "show.json", post: post)
   end
 
